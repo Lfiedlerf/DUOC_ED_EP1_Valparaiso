@@ -32,18 +32,20 @@ El análisis se construye sobre un stack minimalista y eficiente para manipulaci
 └── TP_Valparaiso_FiedlerLuis.ipynb                 # Notebook ejecutable (Colab)
 ```
 
-## Instalacion y Ejecucion
-Ejecute la siguiente secuencia de comandos en su entorno de terminal para el despliegue del proyecto:
-## Clonar el repositorio
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_DIRECTORIO>
+## Instrucciones de Ejecución
+Para ejecutar este análisis en tu entorno local o en la nube, sigue los siguientes procedimientos:
 
-# Crear y activar entorno virtual
-python -m venv venv
-source venv/bin/activate  # En sistemas Windows: venv\Scripts\activate
-
-# Ejecutar el entorno interactivo
-jupyter notebook
+### Opción 1: Google Colab (Recomendado)
+1. Abre el archivo del notebook en Google Colab.
+2. Sube el archivo de datos 06_MATRICULAS_ED_SUPERIOR_VALPARAISO_2021.xlsx a la sesión de almacenamiento temporal de Colab.
+3. Ejecuta las celdas secuencialmente.
+### Opción 2: Entorno Local (Jupyter / VS Code)
+1. Clona este repositorio o descarga los archivos fuente.
+2. Instala las dependencias necesarias ejecutando
+```text
+pip install pandas numpy matplotlib openpyxl
+```
+3. Inicia Jupyter Notebook o abre el archivo en tu IDE preferido y ejecuta el pipeline completo.
 
 ## Metodologia de Analisis
 1. **Ingesta y Limpieza:** El dataset principal de 109.198 observaciones y 28 dimensiones se integra vía API de lectura de Pandas. Para el tratamiento de integridad, la agregación de datos preserva activamente los valores atípicos o nulos (empleando dropna=False) para no alterar el cálculo real de la proporción poblacional.
@@ -56,3 +58,27 @@ La auditoría de las métricas extraídas en el EDA arroja las siguientes conclu
 2. **Demanda Academica por Jornada:** Existe una concentración operacional en la jornada diurna, la cual representa la moda absoluta con 86.826 estudiantes inscritos (79.51% de cobertura regional). La jornada vespertina representa el segundo mayor bloque con el 18.36%.
 3. **Perfil Etario:** La distribución por edades es asimétrica y se encuentra concentrada en el rango etario tradicional de 20 a 24 años, abarcando al 50.49% de los alumnos (55.143 matriculados).
 4. **Aseguramiento de la Calidad:** El volumen de matrícula presenta una fuerte preferencia hacia la calidad certificada, con un 95.77% del alumnado (104.580 estudiantes) registrado en entidades con estado de "ACREDITADA".
+
+## Consideraciones y calidad de datos
+### 1. Regla Estricta de Visualización
+Como estándar de calidad en la representación gráfica, se implementa la siguiente lógica condicional en el código:
+- Variables Continuas Agrupadas: Se utiliza ```textplt.hist()``` o ```textplt.bar()``` configurado para que las barras estén pegadas, representando un Histograma real y respetando la continuidad de los intervalos.
+- Variables Discretas o Categóricas: Se utiliza ```textplt.bar()``` con espaciado natural entre categorías, evitando la falsa ilusión de continuidad. Un gráfico de barras con espacios solo aplica para estos casos.
+2. Manejo de Valores Nulos
+El pipeline incluye el parámetro ```textdropna=False``` en las tablas de frecuencia para auditar la calidad del dato y detectar valores faltantes. Para los cálculos estadísticos y gráficos, se aplica la exclusión de nulos implícita en las funciones de Pandas y Matplotlib para evitar sesgos o errores de ejecución.
+3. Precisión en Variables Continuas
+Para variables financieras como el valor de matrícula y arancel, las medidas de tendencia central, posición y dispersión se calculan sobre el dataset original sin agrupar. Esto garantiza la exactitud matemática, mientras que la tabla de frecuencias y el histograma muestran la agrupación en intervalos para fines de visualización y análisis de distribución.
+4. Restricción Tecnológica de Visualización
+Por diseño y restricciones del proyecto, no se utiliza la librería Seaborn. Toda la visualización se construye desde cero utilizando Matplotlib para garantizar el control absoluto sobre los parámetros de los gráficos y cumplir con la regla estricta de histogramas.
+
+
+## Autor
+
+**Luis Fiedler** - Estudiante de Ingeniería Informática
+
+- GitHub: [@Lfiedlerf](https://github.com/Lfiedlerf/)
+- LinkedIn: [Tu Perfil](https://www.linkedin.com/in/lfiedlerf/)
+
+## Licencia
+
+Este proyecto es de código abierto.
